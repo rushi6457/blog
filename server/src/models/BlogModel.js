@@ -12,19 +12,25 @@ const BlogSchema = new mongoose.Schema({
         trim:true
     },
     image:{
-        type:String
+        data:Buffer,
+        ContentType:String
     },
     author:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'
     },
     comments:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
     },
     likes:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'user'
+        ref:'user',
+        max:1
     }
 },{
     timestamps:true
 })
+
+const BlogModel = mongoose.model('/blog',BlogSchema)
+module.exports = BlogModel
