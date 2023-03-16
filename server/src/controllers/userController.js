@@ -70,7 +70,16 @@ const Login = async(req,res) =>{
     }
 }
 
+const AllUsers = async(req,res) =>{
+    const users = await UserModel.find().select('-password')
+    
+    if(users){
+    res.send(users).status(200)
+    }
+}
+
 module.exports = {
     Signup,
-    Login
+    Login,
+    AllUsers
 }
