@@ -10,6 +10,7 @@ app.use(cors({origin:true,credentials:true}))
 app.use(express.json())
 
 app.use("/user",userRoute)
+// app.use("/blog",blogRoute)
 app.use("/blog",blogRoute)
 app.get("/",(req,res) =>res.send("HELLO"))
 

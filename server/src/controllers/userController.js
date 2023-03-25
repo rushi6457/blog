@@ -1,6 +1,7 @@
 const generateToken = require("../middlewares/token");
 const UserModel = require("../models/userModel");
 const argon = require('argon2');
+const cookieParser = require('cookie-parser');
 
 const Signup = async(req,res) =>{
     const {name,email,password} = req.body;
@@ -54,7 +55,8 @@ const Login = async(req,res) =>{
     const user = await UserModel.findOne({email})
     try {
         if(user && await argon.verify(user.password,password)){
-            res.json({
+            res.cookie('token',generateToken(user._id,user.role))
+            .json({
                 _id:user._id,
                 name:user.name,
                 email:user.email,
@@ -71,6 +73,7 @@ const Login = async(req,res) =>{
 }
 
 const AllUsers = async(req,res) =>{
+    
     const users = await UserModel.find().select('-password')
     
     if(users){
