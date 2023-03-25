@@ -53,6 +53,7 @@ const Signup = async(req,res) =>{
 const Login = async(req,res) =>{
     const {email,password} = req.body;
     const user = await UserModel.findOne({email})
+    
     try {
         if(user && await argon.verify(user.password,password)){
             res.cookie('token',generateToken(user._id,user.role))
