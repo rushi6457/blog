@@ -12,7 +12,8 @@ const Login = () => {
             width={'40%'}
             padding={'3rem'}
             margin={'auto'}
-            borderRadius={'2rem'}
+            borderTopRightRadius={'2rem'}
+            borderBottomRadius={'2rem'}
             >
             <Container>
                 <Heading 

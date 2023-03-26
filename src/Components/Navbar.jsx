@@ -9,12 +9,13 @@ const Navbar = () => {
     return (
         <HStack 
             width={'100%'}
+            position={'fixed'}
+            zIndex={'10'}
             display={'flex'} 
             justifyContent={'space-between'} 
             align={'center'}
             boxShadow= "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
             padding={'20px'}
-            position={'fixed'}
             >
             <Flex 
                 align={'center'} 

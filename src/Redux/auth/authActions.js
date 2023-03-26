@@ -1,0 +1,25 @@
+import axios from 'axios'
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './authTypes'
+
+// signup actions
+export const signup = (creds) => async(dispatch) =>{
+    dispatch({type:SIGNUP_REQUEST})
+    try {
+        let res = await axios.post(`http://localhost:5000/user/signup`,creds)
+        console.log(res.data);
+        dispatch({type:SIGNUP_SUCCESS,payload:res.data})
+    } catch (error) {
+        dispatch({type:SIGNUP_FAILURE})
+    }
+}
+//login actions
+export const login = (creds) => async(dispatch) =>{
+    dispatch({type:LOGIN_REQUEST})
+    try {
+        let res = await axios(`http://localhost:5000/user/login`,creds)
+        console.log(res.data);
+        dispatch({type:LOGIN_SUCCESS,payload:res.data})
+    } catch (error) {
+        dispatch({type:LOGIN_FAILURE})
+    }
+}
