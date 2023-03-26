@@ -4,6 +4,7 @@ import React from 'react';
 const Login = () => {
     return (
     <Center 
+        paddingTop={'7%'} 
         w='100vw'
         h='100vh'>
         <VStack  
@@ -25,7 +26,7 @@ const Login = () => {
                 <Input></Input>
                 <Button 
                     variant={'solid'}
-                    colorScheme='whatsapp'
+                    colorScheme='blue'
                     width='10vw'
                     color='white'
                     borderRadius={'30px'}

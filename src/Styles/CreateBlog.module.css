@@ -1,0 +1,12 @@
+.blogContent{
+   overflow-y: scroll ;
+    
+}
+.blogContent::-webkit-scrollbar {
+  width: 5px;
+}
+
+.blogContent::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 10px;
+}

@@ -27,7 +27,7 @@ const Signup = () => {
                 <Input></Input>
                 <Button 
                     variant={'solid'}
-                    colorScheme='whatsapp'
+                    colorScheme='blue'
                     width='10vw'
                     color='white'
                     borderRadius={'30px'}
