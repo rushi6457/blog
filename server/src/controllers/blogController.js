@@ -22,66 +22,79 @@ const CreateBlog = async(req,res) =>{
 
 const DeleteBlog = async(req,res) =>{
     const {id} = req.params;
+   
+    
     try {
-        const deleteBlog = await BlogModel.findByIdAndDelete({_id:id})
+        const userId = await BlogModel.findById(id);
         const {token} = req.cookies;
+        let check = jwt.decode(token)
         jwt.verify(token,process.env.SecretToken,{},async() =>{
-
-            if(token){
-                res.status(200).send({"message":"Blog deleted successfully"})
+            // console.log(userId.author , check.id);
+            if(token && userId.author == check.id){
+                 const deleteBlog = await BlogModel.findByIdAndDelete({_id:id})
+                res.status(200).send({"message":"Blog deleted successfully",deleteBlog})
             }
             else{
-                res.status(400).send({"message":"Blog not found"})
+                res.status(400).send({"message":"Unauthorised person"})
             } 
         })
     } catch (error) {
-        
+        res.send(error)
     }
 }
 
 const UpdateBlog = async(req,res) =>{
-     const {id} = req.params;
-    const {token} = req.cookies;
-    let user = jwt.decode(token)
-    console.log(user.id)
-    const blogs = await BlogModel.findById({_id:id})
-    console.log(blogs);
-
-    if(user.id === blogs.author){
-       const blogs = await BlogModel.findByIdAndUpdate({_id:id})
-
-    }
-    else{
-       res.status(400).send({"message":"Unathorised person"})
-    }
-//   jwt.verify(token, process.env.SecretToken, {}, async (err,info) => {
-//     if (err) throw err;
-//     co.authornst {title,blog} = req.body;
-//     const postDoc = await BlogModel.findById({_id:id});
-//     console.log(postDoc)
-//     const isAuthor = (postDoc.author === info.id);
-//     if (!isAuthor) {
-//       return res.status(400).send('you are not the author');
-//     }
-//     await postDoc.update({
-//       title,
-//       blog,
-//     });
-
-//     res.send(postDoc);
-//   });
-
-
-    // const {id} = req.params;
-    // const {userId} = req.params;
-    // // const {token} = req.cookies;
-    // const blogs = await BlogModel.findById({_id:id}).populate("author").select("-password")
-    // const user = await UserModel.findById({_id:userId})
-    // console.log(blogs._id);
+    const {id} = req.params;
    
+    try {
+        const {title,blog} = req.body;
+        const userId = await BlogModel.findById(id);
+        const {token} = req.cookies;
+        let check = jwt.decode(token)
+        jwt.verify(token,process.env.SecretToken,{},async() =>{
+            if(token && userId.author == check.id){
+                 const updateBlog = await BlogModel.findByIdAndUpdate({_id:id})
+                 
+                  await updateBlog.updateOne({
+                                title,
+                                blog,
+                            });
+
+                res.status(200).send({"message":"Blog updated successfully",updateBlog})
+            }
+            else{
+                res.status(400).send({"message":"Unauthorised person"})
+            } 
+        })
+    } catch (error) {
+        res.send(error)
+    }
 }
+
+const SingleBlog = async(req,res) =>{
+    const {id} = req.params;
+
+    try {
+        const blog = await BlogModel.findById({_id:id}).populate("author").select("-password");
+        res.status(200).send(blog)
+    } catch (error) {
+        res.status(404).send({"message":"Blog not found"})
+    }
+}
+
+const AllBlogs = async(req,res) =>{
+    try {
+        let blogs = await BlogModel.find().populate("author").select("-password")
+        res.send(blogs).status(200)
+    } catch (error) {
+        res.status(404).send(error)
+    }
+}
+
 module.exports = {
     CreateBlog,
     DeleteBlog,
-    UpdateBlog
+    UpdateBlog,
+    SingleBlog,
+    AllBlogs
 }
