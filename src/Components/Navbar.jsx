@@ -1,20 +1,29 @@
 import { Button, Flex, HStack, Heading, Image, useColorMode } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import {MoonIcon,SunIcon} from "@chakra-ui/icons"
 import {FcReadingEbook} from "react-icons/fc";
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../Redux/auth/authActions';
 
 const Navbar = () => {
      const { colorMode, toggleColorMode } = useColorMode()
+     const store = useSelector(store=>store.login)
+    const [state,setState] = useState(false)
+    const dispatch = useDispatch()
+     const handleClick = () =>{
+        dispatch(logout())
+     }
     return (
         <HStack 
             width={'100%'}
+            position={'fixed'}
+            zIndex={'10'}
             display={'flex'} 
             justifyContent={'space-between'} 
             align={'center'}
             boxShadow= "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
             padding={'20px'}
-            position={'fixed'}
             >
             <Flex 
                 align={'center'} 
@@ -33,12 +42,13 @@ const Navbar = () => {
                         onClick={toggleColorMode}>{colorMode === 'light' ? <MoonIcon/> : <SunIcon/>}</Button>   
                     <Link to={'/login'}>  
                     <Button
+                        onClick={handleClick}
                         fontFamily={'monospace'}
                         letterSpacing={'1px'}
                         fontSize={'lg'}
                         variant={'solid'}
                         colorScheme='red'
-                        >Login</Button>
+                        >{store.token?.token ? "Logout" : "Login"}</Button>
                     </Link>
                     <Link to={'/signup'}>
                     <Button

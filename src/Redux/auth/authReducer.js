@@ -1,10 +1,15 @@
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "./authTypes"
-
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "./authTypes"
+import Cookies from "js-cookie";
 // Login reducer
+
+const token = JSON.parse(localStorage.getItem("user-info")) || [];
+    // console.log(token.token);
 const initStateLogin = {
-    isAuth:false,
+    isAuth:!!token,
     isLoading:false,
-    isError:false
+    isError:false,
+    token:token,
+    
 }
 export const loginReducer = (state = initStateLogin,{type,payload}) =>{
 
@@ -12,17 +17,21 @@ export const loginReducer = (state = initStateLogin,{type,payload}) =>{
         case LOGIN_REQUEST:{
             return {
                 ...state,
+                token:'',
                 isAuth:false,
                 isLoading:true,
                 isError:false
             }
         }
         case LOGIN_SUCCESS:{
+            // Cookies.set("token",JSON.stringify(payload),{expires:2})
+            localStorage.setItem("user-info",JSON.stringify(payload))
             return{
                 ...state,
-                isAuth:payload,
+                isAuth:true,
                 isError:false,
-                isLoading:false
+                isLoading:false,
+                token:payload
             }
         }
         case LOGIN_FAILURE:{
@@ -30,7 +39,18 @@ export const loginReducer = (state = initStateLogin,{type,payload}) =>{
                 ...state,
                 isAuth:false,
                 isLoading:false,
-                isError:true
+                isError:true,
+                token:''
+            }
+        }
+        case LOGOUT:{
+            Cookies.remove("token")
+            return {
+                ...state,
+                isAuth:false,
+                isLoading:false,
+                isError:false,
+                token:''
             }
         }
         default:{

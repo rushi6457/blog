@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './authTypes'
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from './authTypes';
+
 
 // signup actions
 export const signup = (creds) => async(dispatch) =>{
@@ -16,10 +17,13 @@ export const signup = (creds) => async(dispatch) =>{
 export const login = (creds) => async(dispatch) =>{
     dispatch({type:LOGIN_REQUEST})
     try {
-        let res = await axios(`http://localhost:5000/user/login`,creds)
+        let res = await axios.post(`http://localhost:5000/user/login`,creds)
         console.log(res.data);
         dispatch({type:LOGIN_SUCCESS,payload:res.data})
     } catch (error) {
         dispatch({type:LOGIN_FAILURE})
     }
 }
+
+//Logout
+export const logout = () => ({type:LOGOUT})
