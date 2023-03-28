@@ -18,8 +18,6 @@ const Home = () => {
     return (
     <Box
         paddingTop={'5%'}
-        // h={'auto'}
-        // border={'1px solid'}
     >
         
     

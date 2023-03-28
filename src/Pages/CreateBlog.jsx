@@ -79,11 +79,11 @@ const CreateBlog = () => {
                         name='title'
                         value={input.title}
                         onChange={handleChange}
-                        placeholder='Blog Title'
+                        placeholder='Title'
                         border={'none'}
                         size={'xl'}
                         variant='flushed'
-                        fontSize={'4rem'}
+                        fontSize={'3rem'}
                     ></Input>
                     <Textarea
                         onChange={handleChange}
@@ -93,7 +93,7 @@ const CreateBlog = () => {
                         size={'xl'}
                         variant='flushed'
                         fontSize={'2rem'}
-                        placeholder='Blog Content'
+                        placeholder='Tell your story...'
                     ></Textarea>
                     <Button 
                         className={styles.button}
