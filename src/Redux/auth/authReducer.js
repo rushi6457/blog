@@ -44,7 +44,7 @@ export const loginReducer = (state = initStateLogin,{type,payload}) =>{
             }
         }
         case LOGOUT:{
-            Cookies.remove("token")
+           localStorage.removeItem("user-info")
             return {
                 ...state,
                 isAuth:false,

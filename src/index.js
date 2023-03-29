@@ -5,15 +5,19 @@ import reportWebVitals from './reportWebVitals';
 import {ChakraProvider, ColorModeScript} from "@chakra-ui/react";
 import {BrowserRouter} from "react-router-dom";
 import theme from './theme/theme';
+import { store } from './Redux/store';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ChakraProvider  theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </ChakraProvider>
   </React.StrictMode>
 );

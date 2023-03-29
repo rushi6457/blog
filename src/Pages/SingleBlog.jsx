@@ -48,7 +48,7 @@ const SingleBlog = () => {
                     >Created on: {DateFormatter(data.updatedAt).longDate()}</Text>
                 </Flex>
                 <Text
-                    width={'70%'}
+                    width={'100%'}
                     margin={'auto'}
                     padding={'5px'}
                     textAlign={'justify'}
