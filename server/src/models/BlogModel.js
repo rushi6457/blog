@@ -11,23 +11,23 @@ const BlogSchema = new mongoose.Schema({
         required:true,
         trim:true
     },
-    image:{
-        data:Buffer,
-        ContentType:String
-    },
+    // image:{
+    //     data:Buffer,
+    //     ContentType:String
+    // },
     author:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'
     },
-    comments:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'comments'
-    },
-    likes:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'user',
-        max:1
-    }
+    // comments:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'comments'
+    // },
+    // likes:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'user',
+    //     max:1
+    // }
 },{
     timestamps:true
 })
